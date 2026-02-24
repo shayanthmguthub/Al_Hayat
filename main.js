@@ -13,12 +13,12 @@
   }
 
   // load shared components
-  loadComponent('navbar-placeholder', '/components/navbar.html');
-  loadComponent('footer-placeholder', '/components/footer.html');
+  loadComponent('navbar-placeholder', 'navbar.html');
+  loadComponent('footer-placeholder', 'footer.html');
 
   // load hero only on index (if element exists)
   if (document.getElementById('hero-placeholder')) {
-    loadComponent('hero-placeholder', '/components/hero.html');
+    loadComponent('hero-placeholder', 'hero.html');
   }
 
   // ---------- GLOBAL: determine page type ----------
@@ -65,7 +65,7 @@
     const product = products.find(p => p.id === productId);
 
     if (!product) {
-      container.innerHTML = '<div class="col-12 text-center py-5"><h3>Product not found</h3><a href="/index.html" class="btn btn-outline-secondary mt-3">Back to shop</a></div>';
+      container.innerHTML = '<div class="col-12 text-center py-5"><h3>Product not found</h3><a href="index.html" class="btn btn-outline-secondary mt-3">Back to shop</a></div>';
       return;
     }
 

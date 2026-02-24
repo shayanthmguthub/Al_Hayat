@@ -7,7 +7,7 @@
   <!-- Bootstrap 5 core CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles (shared with main site) -->
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="style.css">
   <!-- additional about page tweaks (embedded or can be added to style.css) -->
   <style>
     /* about-specific refinements – keeps style.css clean but can also be merged */
@@ -182,7 +182,7 @@
 
     <!-- call to action subtle -->
     <div class="text-center mt-5 pt-4">
-      <a href="/index.html" class="btn btn-outline-dark px-5 py-2 rounded-0" style="border-color: #b89b7b; color: #b89b7b;">explore collection</a>
+      <a href="index.html" class="btn btn-outline-dark px-5 py-2 rounded-0" style="border-color: #b89b7b; color: #b89b7b;">explore collection</a>
     </div>
   </main>
 
@@ -191,8 +191,8 @@
 
   <!-- scripts (same as main site) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/js/products.js"></script> <!-- not strictly needed for about but keeps consistency -->
-  <script src="/assets/js/main.js"></script>
+  <script src="products.js"></script> <!-- not strictly needed for about but keeps consistency -->
+  <script src="main.js"></script>
   <!-- about page specific init (optional, just for navbar/footer loading) -->
   <script>
     // ensure about page uses the same component loader; main.js already runs
@@ -203,9 +203,9 @@
       async function loadNavFooter() {
         if (!document.getElementById('navbar-placeholder')?.innerHTML) {
           try {
-            const navRes = await fetch('/components/navbar.html');
+            const navRes = await fetch('navbar.html');
             if (navRes.ok) document.getElementById('navbar-placeholder').innerHTML = await navRes.text();
-            const footRes = await fetch('/components/footer.html');
+            const footRes = await fetch('footer.html');
             if (footRes.ok) document.getElementById('footer-placeholder').innerHTML = await footRes.text();
           } catch (e) {}
         }
