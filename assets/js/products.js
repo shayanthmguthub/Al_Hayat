@@ -1,0 +1,52 @@
+// /assets/js/products.js
+// product data as JSON object (embedded for speed, but same as external data.json)
+window.productData = [
+  {
+    "id": 1,
+    "name": "Linen Overshirt",
+    "price": 189,
+    "category": "men",
+    "image": "https://images.unsplash.com/photo-1593032469175-73e119128523?q=80&w=2071&auto=format&fit=crop",
+    "description": "Relaxed fit linen overshirt in sand beige. Perfect for layering."
+  },
+  {
+    "id": 2,
+    "name": "Merino Rib Knit",
+    "price": 145,
+    "category": "women",
+    "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1964&auto=format&fit=crop",
+    "description": "Fine merino wool turtleneck, soft and breathable."
+  },
+  {
+    "id": 3,
+    "name": "Leather Tote",
+    "price": 320,
+    "category": "accessories",
+    "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1935&auto=format&fit=crop",
+    "description": "Minimal full-grain leather tote with gold accents."
+  },
+  {
+    "id": 4,
+    "name": "Pleated Trousers",
+    "price": 210,
+    "category": "women",
+    "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1887&auto=format&fit=crop",
+    "description": "High-waist pleated wool trousers – black edition."
+  },
+  {
+    "id": 5,
+    "name": "Cashmere Scarf",
+    "price": 115,
+    "category": "accessories",
+    "image": "https://images.unsplash.com/photo-1601924921557-45e39deb7b4c?q=80&w=1974&auto=format&fit=crop",
+    "description": "Double-face cashmere scarf in warm beige."
+  },
+  {
+    "id": 6,
+    "name": "Cotton Worker Jacket",
+    "price": 275,
+    "category": "men",
+    "image": "https://images.unsplash.com/photo-1617137968427-85924d800d1d?q=80&w=1974&auto=format&fit=crop",
+    "description": "Heavyweight organic cotton jacket with clean lines."
+  }
+];

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Hayat – About</title>
+  <!-- Bootstrap 5 core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles (shared with main site) -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- additional about page tweaks (embedded or can be added to style.css) -->
+  <style>
+    /* about-specific refinements – keeps style.css clean but can also be merged */
+    .about-hero {
+      background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+      height: 50vh;
+      min-height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      margin-top: 0;
+    }
+    .about-hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 300;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .about-hero p {
+      font-size: 1.3rem;
+      font-weight: 300;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .story-section {
+      background-color: #faf8f5;
+    }
+    .gold-quote {
+      border-left: 4px solid #b89b7b;
+      background-color: white;
+      padding: 2rem;
+      font-style: italic;
+      color: #2c2c2c;
+      box-shadow: 0 10px 25px -15px rgba(0,0,0,0.1);
+    }
+    .values-icon {
+      color: #b89b7b;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .value-card {
+      border: none;
+      background: transparent;
+      text-align: center;
+      padding: 1.5rem 0.5rem;
+    }
+    .team-img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      filter: grayscale(20%);
+      border: 3px solid #e0d6c6;
+    }
+    .section-title {
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: #1e1e1e;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background-color: #b89b7b;
+    }
+    .center-title:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <!-- navbar injected dynamically -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- about page hero (unique, not the same as index hero) -->
+  <section class="about-hero">
+    <div>
+      <h1>OUR STORY</h1>
+      <p class="px-3">Crafted with intention, made to last</p>
+    </div>
+  </section>
+
+  <!-- about content: brand philosophy, story, values, team -->
+  <main class="container my-5 py-4">
+    <!-- intro / philosophy -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-8 text-center">
+        <h2 class="section-title center-title">TIMELESS MODESTY</h2>
+        <p class="lead text-secondary">Al Hayat was born from the desire to create clothing that speaks softly yet carries presence. We blend contemporary minimalism with enduring craftsmanship.</p>
+      </div>
+    </div>
+
+    <!-- story grid with image & text -->
+    <div class="row g-5 align-items-center mb-5 story-section p-4 p-lg-5 rounded-3">
+      <div class="col-md-6">
+        <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=2070&auto=format&fit=crop" alt="atelier interior" class="img-fluid" style="filter: grayscale(30%);">
+      </div>
+      <div class="col-md-6">
+        <h3 class="fw-light mb-3" style="color: #b89b7b;">BEGINNINGS</h3>
+        <p>Founded in 2020, Al Hayat started as a small atelier with a focus on natural fabrics, neutral palettes, and precise silhouettes. We believe that what you wear should feel like a second skin—uncomplicated, beautiful, and honest.</p>
+        <p class="mb-0">Every piece is designed in our studio and crafted in partnership with family-owned mills that share our values of responsible production and timeless design.</p>
+      </div>
+    </div>
+
+    <!-- quote / philosophy block -->
+    <div class="row justify-content-center my-5">
+      <div class="col-lg-8">
+        <div class="gold-quote">
+          <p class="fs-5 mb-0">“We don't follow seasons—we follow substance. Al Hayat is an invitation to dress with meaning, to choose pieces that accompany you through life.”</p>
+          <footer class="mt-3 text-secondary">— Amina Said, creative director</footer>
+        </div>
+      </div>
+    </div>
+
+    <!-- values (icon row) -->
+    <h3 class="fw-light text-center my-5" style="color: #b89b7b;">OUR PRINCIPLES</h3>
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="value-card">
+          <div class="values-icon">⚒️</div>
+          <h5>Artisanal care</h5>
+          <p class="small text-secondary">Small-batch production, hand-finished details.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="value-card">
+          <div class="values-icon">🌿</div>
+          <h5>Mindful materials</h5>
+          <p class="small text-secondary">Linen, organic cotton, responsible wool.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="value-card">
+          <div class="values-icon">⏳</div>
+          <h5>Beyond trends</h5>
+          <p class="small text-secondary">Design that lives in your wardrobe for years.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- team (small faces) -->
+    <h3 class="fw-light text-center mt-5 pt-4" style="color: #b89b7b;">THE STUDIO</h3>
+    <div class="row justify-content-center text-center g-4 mt-2">
+      <div class="col-4 col-md-3 col-lg-2">
+        <img class="team-img" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop" alt="founder">
+        <p class="mt-2 mb-0 fw-semibold">Amina</p>
+        <p class="small text-secondary">Creative</p>
+      </div>
+      <div class="col-4 col-md-3 col-lg-2">
+        <img class="team-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt="designer">
+        <p class="mt-2 mb-0 fw-semibold">Rami</p>
+        <p class="small text-secondary">Design</p>
+      </div>
+      <div class="col-4 col-md-3 col-lg-2">
+        <img class="team-img" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1974&auto=format&fit=crop" alt="atelier">
+        <p class="mt-2 mb-0 fw-semibold">Leila</p>
+        <p class="small text-secondary">Atelier</p>
+      </div>
+    </div>
+
+    <!-- call to action subtle -->
+    <div class="text-center mt-5 pt-4">
+      <a href="/index.html" class="btn btn-outline-dark px-5 py-2 rounded-0" style="border-color: #b89b7b; color: #b89b7b;">explore collection</a>
+    </div>
+  </main>
+
+  <!-- footer injected -->
+  <div id="footer-placeholder"></div>
+
+  <!-- scripts (same as main site) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/products.js"></script> <!-- not strictly needed for about but keeps consistency -->
+  <script src="/assets/js/main.js"></script>
+  <!-- about page specific init (optional, just for navbar/footer loading) -->
+  <script>
+    // ensure about page uses the same component loader; main.js already runs
+    // optionally we could preload here, but main.js handles it
+    // small fix: if main.js hasn't executed yet, we double-check navbar load
+    (function() {
+      // function to load components if main.js fails (but it won't)
+      async function loadNavFooter() {
+        if (!document.getElementById('navbar-placeholder')?.innerHTML) {
+          try {
+            const navRes = await fetch('/components/navbar.html');
+            if (navRes.ok) document.getElementById('navbar-placeholder').innerHTML = await navRes.text();
+            const footRes = await fetch('/components/footer.html');
+            if (footRes.ok) document.getElementById('footer-placeholder').innerHTML = await footRes.text();
+          } catch (e) {}
+        }
+      }
+      // if main hasn't loaded them quickly, call fallback
+      setTimeout(loadNavFooter, 200);
+    })();
+  </script>
+</body>
+</html>
