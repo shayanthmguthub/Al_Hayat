@@ -43,7 +43,7 @@
       const col = document.createElement('div');
       col.className = 'col-6 col-md-4 col-lg-3';
       col.innerHTML = `
-        <a href="/product.html?id=${p.id}" class="product-card card border-0">
+        <a href="product.html?id=${p.id}" class="product-card card border-0">
           <img src="${p.image}" class="card-img-top" alt="${p.name}" loading="lazy">
           <div class="card-body">
             <h5 class="card-title">${p.name}</h5>
