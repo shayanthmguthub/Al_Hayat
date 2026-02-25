@@ -47,7 +47,7 @@
           <img src="${p.image}" class="card-img-top" alt="${p.name}" loading="lazy">
           <div class="card-body">
             <h5 class="card-title">${p.name}</h5>
-            <p class="card-text">$${p.price}</p>
+            <p class="card-text">${p.price} PKR</p>
           </div>
         </a>
       `;
@@ -76,9 +76,9 @@
       <div class="col-md-6">
         <p class="detail-category">${product.category}</p>
         <h1 class="display-5 fw-light mb-3">${product.name}</h1>
-        <p class="detail-price">$${product.price}</p>
+        <p class="detail-price">${product.price} PKR</p>
         <p class="text-secondary mt-4">${product.description}</p>
-        <button class="btn btn-dark mt-3 px-5 py-3 w-100 w-md-auto" style="background: #b89b7b; border: none;">Add to bag</button>
+        <a class="btn btn-dark mt-3 px-5 py-3 w-100 w-md-auto" href="https://wa.me/923702841044" style="background: #25d366; border: none; font-size: 22px;"><i class="fa-brands fa-whatsapp"></i> Buy Now</a>
       </div>
     `;
   }

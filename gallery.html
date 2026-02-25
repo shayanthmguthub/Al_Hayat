@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Hayat – Gallery</title>
+  <!-- Bootstrap 5 core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles (shared with main site) -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+
+  <!-- gallery page specific styles (lightweight, can be merged into style.css) -->
+  <style>
+    /* gallery hero - distinct but cohesive */
+    .gallery-hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 40%;
+      height: 40vh;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      margin-top: 0;
+    }
+    .gallery-hero h1 {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 300;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .gallery-hero p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    /* filter buttons (extends category-btn from style.css) */
+    .gallery-filter {
+      margin-top: -1.5rem;
+      position: relative;
+      z-index: 5;
+    }
+    .filter-btn {
+      background: white;
+      border: 1px solid #e0d6c6;
+      padding: 0.5rem 2rem;
+      margin: 0.25rem;
+      border-radius: 40px;
+      font-weight: 400;
+      color: #2c2c2c;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background-color: #b89b7b;
+      border-color: #b89b7b;
+      color: white;
+    }
+
+    /* gallery grid – masonry style with Bootstrap columns */
+    .gallery-item {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease, filter 0.4s ease;
+      filter: grayscale(20%);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.03);
+      filter: grayscale(0%);
+    }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.5));
+      color: white;
+      padding: 2rem 1rem 1rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      text-align: left;
+      pointer-events: none;
+    }
+    .gallery-item:hover .gallery-caption {
+      opacity: 1;
+    }
+    .gallery-caption h5 {
+      font-weight: 300;
+      letter-spacing: 1px;
+      margin-bottom: 0.2rem;
+    }
+    .gallery-caption p {
+      font-size: 0.85rem;
+      margin-bottom: 0;
+      opacity: 0.9;
+    }
+
+    /* lightbox modal (ultra lightweight, no extra library) */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-modal.active {
+      display: flex;
+    }
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+    }
+    .lightbox-content img {
+      width: auto;
+      max-width: 100%;
+      max-height: 90vh;
+      display: block;
+      border: 3px solid #f8f5f0;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 3rem;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 0 15px;
+    }
+    .lightbox-close:hover {
+      color: #b89b7b;
+    }
+
+    /* category badges (optional) */
+    .category-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255,255,255,0.85);
+      color: #2c2c2c;
+      padding: 0.25rem 1rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      backdrop-filter: blur(4px);
+    }
+
+    /* subtle load more */
+    .load-more-btn {
+      border: 1px solid #b89b7b;
+      background: transparent;
+      color: #b89b7b;
+      padding: 0.75rem 3rem;
+      border-radius: 0;
+      font-weight: 400;
+      transition: 0.3s;
+    }
+    .load-more-btn:hover {
+      background: #b89b7b;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- navbar placeholder (fetched from component) -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- gallery hero section (unique) -->
+  <section class="gallery-hero">
+    <div>
+      <h1>VISUAL DIARY</h1>
+      <p class="px-3">moments, textures, silhouettes</p>
+    </div>
+  </section>
+
+  <!-- filter strip (below hero)
+  <div class="container gallery-filter text-center py-4">
+    <div class="d-flex flex-wrap justify-content-center">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="campaign">Campaign</button>
+      <button class="filter-btn" data-filter="details">Details</button>
+      <button class="filter-btn" data-filter="lookbook">Lookbook</button>
+      <button class="filter-btn" data-filter="behind">Behind the scenes</button>
+    </div>
+  </div> -->
+
+  <!-- gallery grid (dynamic) -->
+  <section class="container my-4">
+    <div class="row g-3 g-md-4" id="gallery-grid">
+      <!-- items will be injected by JavaScript from gallery-data -->
+    </div>
+    <!-- optional load more (just UI, can be wired later) -->
+    <div class="text-center my-5">
+      <button class="load-more-btn" id="loadMoreBtn" style="display: none;">Load more</button>
+    </div>
+  </section>
+
+  <!-- lightweight lightbox modal (hidden by default) -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="if(event.target === this) closeLightbox()">
+    <div class="lightbox-content">
+      <img id="lightboxImg" src="" alt="enlarged view">
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    </div>
+  </div>
+
+  <!-- footer placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="products.js"></script> <!-- for consistency (contains productData) -->
+  <script src="main.js"></script>
+
+  <!-- gallery specific data and logic -->
+  <script>
+    // gallery image data (can also be moved to a separate /data/gallery.json, but embedded for speed)
+const galleryItems = [
+  {
+    id: 1,
+    src: "subrang.jpeg",
+    category: "campaign",
+    title: "Subrang Classic Printed Lawn Suit",
+    subtitle: "Effortless Everyday Elegance"
+  },
+  {
+    id: 2,
+    src: "subrang0.jpeg",
+    category: "lookbook",
+    title: "Subrang Classic Lawn – Cyan",
+    subtitle: "Cool Summer Comfort"
+  },
+  {
+    id: 3,
+    src: "subrang1.jpeg",
+    category: "campaign",
+    title: "Latest Subrang Lawn 2026",
+    subtitle: "Modern Meets Tradition"
+  },
+  {
+    id: 4,
+    src: "stella0.jpeg",
+    category: "lookbook",
+    title: "STELLA Lawn Vol 5",
+    subtitle: "Digital Printed Collection"
+  },
+  {
+    id: 5,
+    src: "subrang2.jpeg",
+    category: "lookbook",
+    title: "STELLA Lawn Vol 5 – Pink",
+    subtitle: "Soft, Stylish & Feminine"
+  },
+  {
+    id: 6,
+    src: "sofina.jpeg",
+    category: "details",
+    title: "SIFONA Hit Design",
+    subtitle: "Luxury Embroidered Cotton"
+  },
+  {
+    id: 7,
+    src: "sofina2.jpeg",
+    category: "campaign",
+    title: "SIFONA Hit Design – Black",
+    subtitle: "Bold Evening Elegance"
+  },
+  {
+    id: 8,
+    src: "sofina4.jpeg",
+    category: "details",
+    title: "SIFONA Hit Design – Pink",
+    subtitle: "Festive Luxury Look"
+  },
+  {
+    id: 9,
+    src: "sofina0.jpeg",
+    category: "lookbook",
+    title: "SIFONA Hit Design – Red",
+    subtitle: "Statement Bridal Red"
+  },
+  {
+    id: 10,
+    src: "grace skyblue.jpg",
+    category: "lookbook",
+    title: "GRACE Wash & Wear – Sky Blue",
+    subtitle: "Clean & Classic Daily Wear"
+  },
+  {
+    id: 11,
+    src: "grace camel color.jpg",
+    category: "lookbook",
+    title: "GRACE Wash & Wear – Camel",
+    subtitle: "Timeless Earthy Tone"
+  },
+  {
+    id: 12,
+    src: "J. brown unstiched.webp",
+    category: "campaign",
+    title: "J. Luxury Washing Wear – Brown",
+    subtitle: "Elegant Formal Essential"
+  },
+  {
+    id: 13,
+    src: "J. black.webp",
+    category: "campaign",
+    title: "J. Luxury Washing Wear – Black",
+    subtitle: "Sharp & Powerful Look"
+  },
+  {
+  id: 10,
+  src: 'j. ash white.webp',
+  category: 'lookbook',
+  title: 'J. Luxury Wash & Wear – Ash Grey',
+  subtitle: 'Refined Formal Essential'
+}
+
+];
+
+
+
+    // initial display count (for potential load more)
+    let visibleCount = 12; // show all initially, but we can limit later
+    let currentFilter = 'all';
+
+    // render gallery items based on filter
+    function renderGallery(filter = 'all') {
+      const grid = document.getElementById('gallery-grid');
+      if (!grid) return;
+
+      const filtered = filter === 'all' 
+        ? galleryItems 
+        : galleryItems.filter(item => item.category === filter);
+
+      // optional limit (if we want pagination, but full gallery is fine)
+      const itemsToRender = filtered; // all filtered items
+
+      grid.innerHTML = '';
+      itemsToRender.forEach(item => {
+        const col = document.createElement('div');
+        col.className = 'col-6 col-md-4 col-lg-3'; // responsive grid
+        col.innerHTML = `
+          <a href="javascript:void(0)" class="gallery-item" data-src="${item.src}" data-category="${item.category}" onclick="openLightbox('${item.src}')">
+            <img src="${item.src}" alt="${item.title}" loading="lazy">
+            <div class="gallery-caption">
+              <h5>${item.title}</h5>
+              <p>${item.subtitle}</p>
+            </div>
+          </a>
+        `;
+        grid.appendChild(col);
+      });
+
+      // hide load more if not needed (since we show all, but keep for demo)
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    }
+
+    // lightbox functions
+    window.openLightbox = function(src) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // prevent scrolling
+    };
+
+    window.closeLightbox = function() {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    // filter buttons event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // initial render
+      renderGallery('all');
+
+      // filter buttons
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.getAttribute('data-filter');
+          currentFilter = filter;
+          renderGallery(filter);
+        });
+      });
+
+      // close lightbox with ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeLightbox();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

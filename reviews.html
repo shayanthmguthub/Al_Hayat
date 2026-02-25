@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Hayat – Reviews</title>
+  <!-- Bootstrap 5 core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles (shared with main site) -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+
+  <!-- Reviews page specific styles (lightweight, can be merged) -->
+  <style>
+    /* reviews hero - cohesive with brand */
+    .reviews-hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=2069&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 45%;
+      height: 35vh;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      margin-top: 0;
+    }
+    .reviews-hero h1 {
+      font-size: clamp(2.5rem, 7vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .reviews-hero p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* rating summary card */
+    .rating-summary {
+      background-color: #faf8f5;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: -2rem;
+      box-shadow: 0 10px 25px -15px rgba(0,0,0,0.1);
+      border: 1px solid #e0d6c6;
+    }
+    .average-rating {
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: #b89b7b;
+      line-height: 1;
+    }
+    .stars-container {
+      color: #b89b7b;
+      font-size: 1.4rem;
+      letter-spacing: 4px;
+    }
+    .rating-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .rating-bar .progress {
+      flex-grow: 1;
+      height: 8px;
+      background-color: #e0d6c6;
+      border-radius: 20px;
+    }
+    .rating-bar .progress-bar {
+      background-color: #b89b7b;
+      border-radius: 20px;
+    }
+
+    /* review cards */
+    .review-card {
+      background: white;
+      border: 1px solid #f0eae2;
+      border-radius: 20px;
+      padding: 1.8rem;
+      transition: box-shadow 0.2s;
+      height: 100%;
+    }
+    .review-card:hover {
+      box-shadow: 0 15px 30px -12px rgba(184,155,123,0.1);
+    }
+    .reviewer-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: #e0d6c6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b89b7b;
+      font-weight: 500;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+    .review-stars {
+      color: #b89b7b;
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+    .review-date {
+      font-size: 0.8rem;
+      color: #999;
+    }
+    .review-title {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .review-content {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* write review form */
+    .write-review-section {
+      background-color: #faf8f5;
+      border-radius: 24px;
+      padding: 2.5rem;
+    }
+    .form-control, .form-select {
+      border-radius: 40px;
+      border: 1px solid #e0d6c6;
+      padding: 0.75rem 1.5rem;
+      background-color: white;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: #b89b7b;
+      box-shadow: 0 0 0 0.2rem rgba(184,155,123,0.15);
+    }
+    .btn-gold {
+      background-color: #b89b7b;
+      border: none;
+      color: white;
+      padding: 0.75rem 2.5rem;
+      border-radius: 40px;
+      transition: 0.2s;
+    }
+    .btn-gold:hover {
+      background-color: #a6896b;
+      color: white;
+    }
+
+    /* filter chip */
+    .chip-filter {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border: 1px solid #e0d6c6;
+      border-radius: 40px;
+      margin: 0.25rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+    .chip-filter.active,
+    .chip-filter:hover {
+      background-color: #b89b7b;
+      border-color: #b89b7b;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- navbar placeholder (fetched dynamically) -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- reviews hero -->
+  <section class="reviews-hero">
+    <div>
+      <h1>CUSTOMER REVIEWS</h1>
+      <p>real stories from the Al Hayat community</p>
+    </div>
+  </section>
+
+  <!-- main content container -->
+  <main class="container my-5">
+    <!-- rating summary row -->
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="rating-summary">
+          <div class="row align-items-center g-4">
+            <div class="col-md-4 text-center text-md-start">
+              <div class="average-rating">4.8</div>
+              <div class="stars-container">★★★★★</div>
+              <p class="text-secondary mt-2">based on 128 reviews</p>
+            </div>
+            <div class="col-md-8">
+              <div class="rating-bar mb-2">
+                <span class="small" style="min-width: 40px;">5★</span>
+                <div class="progress"><div class="progress-bar" style="width: 85%;"></div></div>
+                <span class="small text-secondary">108</span>
+              </div>
+              <div class="rating-bar mb-2">
+                <span class="small" style="min-width: 40px;">4★</span>
+                <div class="progress"><div class="progress-bar" style="width: 12%;"></div></div>
+                <span class="small text-secondary">15</span>
+              </div>
+              <div class="rating-bar mb-2">
+                <span class="small" style="min-width: 40px;">3★</span>
+                <div class="progress"><div class="progress-bar" style="width: 2%;"></div></div>
+                <span class="small text-secondary">3</span>
+              </div>
+              <div class="rating-bar mb-2">
+                <span class="small" style="min-width: 40px;">2★</span>
+                <div class="progress"><div class="progress-bar" style="width: 1%;"></div></div>
+                <span class="small text-secondary">1</span>
+              </div>
+              <div class="rating-bar">
+                <span class="small" style="min-width: 40px;">1★</span>
+                <div class="progress"><div class="progress-bar" style="width: 1%;"></div></div>
+                <span class="small text-secondary">1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- filter chips & sort -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mt-5">
+      <div class="d-flex flex-wrap">
+        <span class="chip-filter active" data-filter="all">All reviews</span>
+        <span class="chip-filter" data-filter="5">5 ★</span>
+        <span class="chip-filter" data-filter="4">4 ★</span>
+        <span class="chip-filter" data-filter="3">3 ★</span>
+        <span class="chip-filter" data-filter="2">2 ★</span>
+        <span class="chip-filter" data-filter="1">1 ★</span>
+        <!-- <span class="chip-filter" data-filter="with-photo">With photo</span> -->
+      </div>
+      <div class="mt-3 mt-sm-0">
+        <select class="form-select form-select-sm" style="width: auto; border-radius: 40px;" id="sortSelect">
+          <option value="newest">Newest first</option>
+          <option value="highest">Highest rated</option>
+          <option value="lowest">Lowest rated</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- reviews grid (dynamic) -->
+    <div class="row g-4 mt-2" id="reviews-grid">
+      <!-- reviews injected via JavaScript -->
+    </div>
+
+    <!-- load more (hidden by default, all shown) -->
+    <div class="text-center my-5">
+      <button class="btn btn-outline-dark px-5 py-2" style="border-color: #b89b7b; color: #b89b7b; border-radius: 40px;" id="loadMoreReviews" style="display: none;">Load more</button>
+    </div>
+
+
+  <!-- footer placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- lightweight lightbox for review images (optional)
+  <div class="lightbox-modal" id="reviewLightbox" onclick="if(event.target === this) closeReviewLightbox()" style="display: none;">
+    <div class="lightbox-content">
+      <img id="reviewLightboxImg" src="" alt="review photo">
+      <button class="lightbox-close" onclick="closeReviewLightbox()">&times;</button>
+    </div>
+  </div> -->
+
+  <!-- scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="products.js"></script>
+  <script src="main.js"></script>
+
+  <!-- reviews data and logic -->
+  <script>
+    // sample reviews data (can be moved to data/reviews.json)
+   const reviewsData = [
+  {
+    id: 1,
+    name: "Sara H.",
+    avatar: "SH",
+    rating: 5,
+    date: "2026-02-20",
+    title: "Elegant and Comfortable",
+    content: "The Subrang Classic Printed Lawn Suit is so soft and breathable. Perfect for daily wear and looks stylish without effort.",
+    category: "women",
+    productName: "Subrang Classic Printed Lawn Suit"
+  },
+  {
+    id: 2,
+    name: "Ayesha M.",
+    avatar: "AM",
+    rating: 5,
+    date: "2026-02-18",
+    title: "Fresh Cyan Design",
+    content: "Absolutely loved the cyan version of the Subrang suit. The print is subtle yet eye-catching and the fabric keeps me cool all day.",
+    category: "women",
+    productName: "Subrang Classic Printed Lawn Suit – Cyan"
+  },
+  {
+    id: 3,
+    name: "Fatima K.",
+    avatar: "FK",
+    rating: 4,
+    date: "2026-02-15",
+    title: "Perfect Daily Wear",
+    content: "The latest Subrang Lawn Suit Designs for 2026 are just amazing. Comfortable for work and casual meetups. Slightly pricey but worth it.",
+    category: "women",
+    productName: "Latest Subrang Lawn Suit Designs for 2026"
+  },
+  {
+    id: 4,
+    name: "Zoya R.",
+    avatar: "ZR",
+    rating: 5,
+    date: "2026-02-12",
+    title: "Beautiful Lawn Collection",
+    content: "STELLA Lawn Digital Printed Collection 2025 Vol 5 is just as beautiful as advertised. Prints are vibrant and the suit is lightweight.",
+    category: "women",
+    productName: "STELLA LAWN DIGITAL PRINTED LAWN"
+  },
+  {
+    id: 5,
+    name: "Hina S.",
+    avatar: "HS",
+    rating: 5,
+    date: "2026-02-10",
+    title: "Lovely Pink Variant",
+    content: "The Pink variant of STELLA Vol 5 is so feminine and graceful. The fabric feels premium and it's perfect for summer outings.",
+    category: "women",
+    productName: "STELLA LAWN DIGITAL PRINTED – Pink"
+  },
+  {
+    id: 6,
+    name: "Maryam A.",
+    avatar: "MA",
+    rating: 5,
+    date: "2026-02-08",
+    title: "Luxury Embroidery",
+    content: "SIFONA Hit Design – Normal is stunning. The sequence and embroidery work make it feel luxurious and perfect for festive occasions.",
+    category: "women",
+    productName: "SIFONA Hit Design – Normal"
+  },
+  {
+    id: 7,
+    name: "Rabia N.",
+    avatar: "RN",
+    rating: 5,
+    date: "2026-02-05",
+    title: "Elegant Black Version",
+    content: "The Black SIFONA Hit Design looks gorgeous. The embroidery stands out beautifully and the cotton fabric is very comfortable.",
+    category: "women",
+    productName: "SIFONA Hit Design – Black"
+  },
+  {
+    id: 8,
+    name: "Khadija T.",
+    avatar: "KT",
+    rating: 4,
+    date: "2026-02-02",
+    title: "Lovely Pink Embroidery",
+    content: "SIFONA Hit Design – Pink is perfect for daytime events. The fabric is soft and the embroidered dupatta adds elegance.",
+    category: "women",
+    productName: "SIFONA Hit Design – Pink"
+  },
+  {
+    id: 9,
+    name: "Sana L.",
+    avatar: "SL",
+    rating: 5,
+    date: "2026-01-30",
+    title: "Bold Red Design",
+    content: "SIFONA Hit Design – Red is striking! The embroidery is intricate and the outfit feels luxurious. Perfect for weddings and parties.",
+    category: "women",
+    productName: "SIFONA Hit Design – Red"
+  }
+];
+
+
+    let currentFilter = 'all';
+    let currentSort = 'newest';
+    let visibleReviews = reviewsData; // all
+
+    // render reviews based on filter & sort
+    function renderReviews() {
+      const grid = document.getElementById('reviews-grid');
+      if (!grid) return;
+
+      // filter
+      let filtered = [...reviewsData];
+      if (currentFilter !== 'all') {
+        if (currentFilter === 'with-photo') {
+          filtered = filtered.filter(r => r.photo);
+        } else {
+          const ratingNum = parseInt(currentFilter);
+          filtered = filtered.filter(r => r.rating === ratingNum);
+        }
+      }
+
+      // sort
+      if (currentSort === 'newest') {
+        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } else if (currentSort === 'highest') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (currentSort === 'lowest') {
+        filtered.sort((a, b) => a.rating - b.rating);
+      }
+
+      visibleReviews = filtered;
+
+      grid.innerHTML = '';
+      filtered.forEach(review => {
+        const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+        const formattedDate = new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-4';
+        col.innerHTML = `
+          <div class="review-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div class="d-flex gap-3">
+                <div class="reviewer-avatar">${review.avatar}</div>
+                <div>
+                  <h6 class="mb-0">${review.name}</h6>
+                  <span class="review-stars">${stars}</span>
+                </div>
+              </div>
+              <span class="review-date">${formattedDate}</span>
+            </div>
+            <h5 class="review-title">${review.title}</h5>
+            <p class="review-content small">${review.content}</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="badge bg-light text-dark border rounded-pill px-3 py-1">${review.productName}</span>
+              ${review.photo ? `<a href="javascript:void(0)" onclick="openReviewLightbox('${review.photo}')" class="small text-decoration-none" style="color: #b89b7b;">📷 view photo</a>` : ''}
+            </div>
+          </div>
+        `;
+        grid.appendChild(col);
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p class="text-center w-100 py-5">No reviews match this filter.</p>';
+      }
+    }
+
+    // // lightbox for review photos
+    // window.openReviewLightbox = function(src) {
+    //   const modal = document.getElementById('reviewLightbox');
+    //   const img = document.getElementById('reviewLightboxImg');
+    //   img.src = src;
+    //   modal.style.display = 'flex';
+    //   document.body.style.overflow = 'hidden';
+    // };
+
+    // window.closeReviewLightbox = function() {
+    //   const modal = document.getElementById('reviewLightbox');
+    //   modal.style.display = 'none';
+    //   document.body.style.overflow = '';
+    // };
+
+    // // form submit handler (prevent actual submit, just demo)
+    // window.handleReviewSubmit = function(e) {
+    //   e.preventDefault();
+    //   alert('Thank you for your review! (demo - would be submitted in production)');
+    //   e.target.reset();
+    // };
+
+    // init on load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderReviews();
+
+      // filter chips
+      const chips = document.querySelectorAll('.chip-filter');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          currentFilter = chip.getAttribute('data-filter');
+          renderReviews();
+        });
+      });
+
+      // sort dropdown
+      const sortSelect = document.getElementById('sortSelect');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+          currentSort = e.target.value;
+          renderReviews();
+        });
+      }
+
+      // ESC close lightbox
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeReviewLightbox();
+      });
+    });
+  </script>
+</body>
+</html>
